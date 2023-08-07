@@ -1,0 +1,64 @@
+<div class="container">
+  <h1>To Do</h1>
+  <br />
+  <form [formGroup]="todoGroup" (ngSubmit)="addToDo()">
+    <table>
+      <tbody formArrayName="todoArrays">
+        <div *ngFor="let todo of todoArray.controls" [formGroup]="todo">
+          <tr style="width: 100%">
+            <td>Description:</td>
+            <td style="padding-left: 5%">
+              <input
+                type="text"
+                style="width: 150%"
+                formControlName="description"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Priority:</td>
+            <td style="padding-left: 5%;">
+              <label for="high" class="form-label">High</label>
+              <input
+                type="radio"
+                id="high"
+                name="priority"
+                value="high"
+                style="margin-right: 5px; margin-left: 3px"
+                formControlName="priority"
+              />
+              <label for="medium" class="form-label">Medium</label>
+              <input
+                type="radio"
+                id="medium"
+                name="priority"
+                value="medium"
+                style="margin-right: 5px; margin-left: 3px"
+                formControlName="priority"
+              />
+              <label for="low" class="form-label">Low</label>
+              <input
+                type="radio"
+                id="low"
+                name="priority"
+                value="low"
+                style="margin-left: 3px"
+                formControlName="priority"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Due:</td>
+            <td style="padding-left: 5%">
+              <input type="date" formControlName="due" />
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td style="padding-left: 5%"><button type="submit">Add</button></td>
+          </tr>
+        </div>
+      </tbody>
+    </table>
+  </form>
+</div>
