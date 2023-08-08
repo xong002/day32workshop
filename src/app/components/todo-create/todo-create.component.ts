@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
 
 @Component({
@@ -8,38 +8,48 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
   styleUrls: ['./todo-create.component.css']
 })
 export class TodoCreateComponent {
-  todoGroup : FormGroup;
-  todoArray : FormArray;
+  todoGroup: FormGroup;
+  todoArray: FormArray;
   todoObj: {
     description: "",
     priority: "",
     date: null
   }
+  priorityLevel: string = "Low";
 
-  constructor(private formBuilder : FormBuilder){}
-  
+  constructor(private formBuilder: FormBuilder) { }
+
   ngOnInit(): void {
     this.todoArray = this.formBuilder.array([]);
-    this.todoGroup = this.formBuilder.group({ todoArrays: this.todoArray})
+    this.todoGroup = this.formBuilder.group({ todoArrays: this.todoArray })
     this.addToDoRow();
   }
 
-  addToDoRow(){
+  addToDoRow() {
     const todoSubGroup = this.formBuilder.group({
-      description: new FormControl<string>("", [Validators.required]),
-      priority: new FormControl<string>("", [Validators.required]),
-      due: new FormControl<Date>(new Date(), [Validators.required]),
+      description: new FormControl<string>("", {
+        validators: [Validators.required, Validators.minLength(5)],
+        updateOn: 'change'
+      }),
+      priority: new FormControl<string>(this.priorityLevel, [Validators.required]),
+      due: new FormControl<Date>(null, [Validators.required, dateValidator]),
     })
     this.todoArray.push(todoSubGroup);
   }
 
   @Output() addToDoOutput: EventEmitter<FormArray> = new EventEmitter();
 
-  addToDo(){
+  addToDo() {
     let arrayControl = this.todoGroup.get('todoArrays') as FormArray;
     this.addToDoOutput.emit(arrayControl);
     console.log(arrayControl.at(0).value)
   }
 
+}
 
+const dateValidator = (ctrl: AbstractControl) => {
+  if (ctrl.value < new Date().toJSON().slice(0,10)){
+    return { pastDate: true} as ValidationErrors;
+  }
+  return null;
 }

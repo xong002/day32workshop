@@ -5,57 +5,105 @@
     <table>
       <tbody formArrayName="todoArrays">
         <div *ngFor="let todo of todoArray.controls" [formGroup]="todo">
-          <tr style="width: 100%">
+          <tr>
             <td>Description:</td>
-            <td style="padding-left: 5%">
+            <td style="padding-left: 20px; width: 300px">
               <input
                 type="text"
-                style="width: 150%"
                 formControlName="description"
+                placeholder="Description"
               />
+            </td>
+            <td>
+              <div
+                *ngIf="
+                  todo.get('description').hasError('required') &&
+                  todo.get('description').touched
+                "
+                style="width: auto; color: red"
+              >
+                Please enter description (mandatory).
+              </div>
+              <div
+                *ngIf="todo.get('description').hasError('minlength')"
+                style="width: auto; color: red"
+              >
+                Please enter more than 5 characters.
+              </div>
             </td>
           </tr>
           <tr>
             <td>Priority:</td>
-            <td style="padding-left: 5%;">
+            <td style="padding-left: 20px; width: 300px">
               <label for="high" class="form-label">High</label>
               <input
                 type="radio"
                 id="high"
                 name="priority"
-                value="high"
+                value="High"
                 style="margin-right: 5px; margin-left: 3px"
                 formControlName="priority"
               />
+              <!-- <br /> -->
               <label for="medium" class="form-label">Medium</label>
               <input
                 type="radio"
                 id="medium"
                 name="priority"
-                value="medium"
+                value="Medium"
                 style="margin-right: 5px; margin-left: 3px"
                 formControlName="priority"
               />
+              <!-- <br /> -->
               <label for="low" class="form-label">Low</label>
               <input
                 type="radio"
                 id="low"
                 name="priority"
-                value="low"
+                [value]="priorityLevel"
                 style="margin-left: 3px"
                 formControlName="priority"
               />
             </td>
+            <td>
+              <div
+                *ngIf="todo.get('priority').hasError('required')"
+                style="width: auto; color: red"
+              >
+                Please select priority (mandatory).
+              </div>
+            </td>
           </tr>
           <tr>
             <td>Due:</td>
-            <td style="padding-left: 5%">
+            <td style="padding-left: 20px; width: 300px">
               <input type="date" formControlName="due" />
+            </td>
+            <td>
+              <div
+                *ngIf="
+                  todo.get('due').hasError('required') &&
+                  todo.get('due').touched
+                "
+                style="width: auto; color: red"
+              >
+                Please select due date (mandatory).
+              </div>
+              <div
+                *ngIf="
+                  todo.get('due').hasError('pastDate')
+                "
+                style="width: auto; color: red"
+              >
+                Date is in the past.
+              </div>
             </td>
           </tr>
           <tr>
             <td></td>
-            <td style="padding-left: 5%"><button type="submit">Add</button></td>
+            <td style="padding-left: 20px">
+              <button type="submit" [disabled]="!todoGroup.valid">Add</button>
+            </td>
           </tr>
         </div>
       </tbody>

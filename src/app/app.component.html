@@ -1,14 +1,18 @@
 <app-todo-create (addToDoOutput)="addToDoList($event)"></app-todo-create>
-<br><br>
+<br /><br />
 <div class="container border border-dark">
-    <h1>Task List</h1>
-    <table class="table">
-        <tr *ngFor="let t of taskList" class="container border border-dark">
-            <td>{{t.description}}</td>
-            <td>{{t.priority}}</td>
-            <td>{{t.due}}</td>
-        </tr>
-    </table>
+  <h1>Task List</h1>
+  <table class="table">
+    <tr *ngFor="let t of taskList" class="container border border-dark">
+      <td>
+        <h3>{{ t.description }}</h3>
+        <p>{{ t.priority }}</p>
+      </td>
+      <td>
+        <span style="float:right; bottom: 0;">{{ t.due | date:'dd MMM yyyy' }}</span>
+      </td>
+    </tr>
+  </table>
 </div>
 
 <router-outlet></router-outlet>
