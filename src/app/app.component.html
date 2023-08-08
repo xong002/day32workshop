@@ -1,4 +1,4 @@
-<app-todo-create (addToDoOutput)="addToDoList($event)"></app-todo-create>
+<app-todo-create [selectedTask]="selectedTask" (addToDoOutput)="addToDoList($event)"></app-todo-create>
 <br /><br />
 <div class="container border border-dark table-responsive">
   <h1>Task List</h1>
@@ -27,8 +27,10 @@
           />
         </td>
         <td width="5%" style="text-align: center; vertical-align: middle">
-            <button class="btn btn-success"(click)="editTask(t)">Edit</button>
-            <button class="btn btn-danger"(click)="deleteTask(t.description)">Delete</button>
+          <button class="btn btn-success" (click)="editTask(t.description)">Edit</button>
+          <button class="btn btn-danger" (click)="deleteTask(t.description)">
+            Delete
+          </button>
         </td>
       </tr>
     </div>

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container border border-dark">
   <h1>To Do</h1>
   <br />
   <form [formGroup]="todoGroup" (ngSubmit)="addToDo()">
@@ -99,11 +99,13 @@
               </div>
             </td>
           </tr>
-          <tr><input type="hidden" formControlName="completed"></tr>
+          <tr><input type="hidden" formControlName="completed">
+            <input type="hidden" formControlName="editing"></tr>
           <tr>
             <td></td>
             <td style="padding-left: 20px">
-              <button type="submit" [disabled]="!todoGroup.valid">Add</button>
+              <button type="submit" [disabled]="!todoGroup.valid">Save</button>
+              <button *ngIf="todo.get('editing').value" (click)="cancelEdit">Cancel</button>
             </td>
           </tr>
         </div>
