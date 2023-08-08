@@ -33,6 +33,7 @@ export class TodoCreateComponent {
       }),
       priority: new FormControl<string>(this.priorityLevel, [Validators.required]),
       due: new FormControl<Date>(null, [Validators.required, dateValidator]),
+      completed: new FormControl<boolean>(false)
     })
     this.todoArray.push(todoSubGroup);
   }

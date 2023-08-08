@@ -1,17 +1,37 @@
 <app-todo-create (addToDoOutput)="addToDoList($event)"></app-todo-create>
 <br /><br />
-<div class="container border border-dark">
+<div class="container border border-dark table-responsive">
   <h1>Task List</h1>
-  <table class="table">
-    <tr *ngFor="let t of taskList" class="container border border-dark">
-      <td>
-        <h3>{{ t.description }}</h3>
-        <p>{{ t.priority }}</p>
-      </td>
-      <td>
-        <span style="float:right; bottom: 0;">{{ t.due | date:'dd MMM yyyy' }}</span>
-      </td>
-    </tr>
+  <table
+    class="table table-bordered"
+    style="border-collapse: normal; margin-left: auto; margin-right: auto"
+  >
+    <div *ngFor="let t of taskList">
+      <tr *ngIf="!t.completed">
+        <td width="50%">
+          <h3 style="inline-size: 200px; overflow-wrap: break-word">
+            {{ t.description }}
+          </h3>
+          <p>{{ t.priority }}</p>
+        </td>
+        <td width="10%" style="text-align: center; vertical-align: middle">
+          <span>Due: <br />{{ t.due | date : "dd MMM yyyy" }}</span>
+        </td>
+        <td width="5%" style="text-align: center; vertical-align: middle">
+          <label for="completed"> Mark complete </label>
+          <input
+            type="checkbox"
+            name="completed"
+            id="completed"
+            (change)="markCompleted(t.description)"
+          />
+        </td>
+        <td width="5%" style="text-align: center; vertical-align: middle">
+            <button class="btn btn-success"(click)="editTask(t)">Edit</button>
+            <button class="btn btn-danger"(click)="deleteTask(t.description)">Delete</button>
+        </td>
+      </tr>
+    </div>
   </table>
 </div>
 
