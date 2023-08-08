@@ -1,7 +1,7 @@
 <div class="container border border-dark">
   <h1>To Do</h1>
   <br />
-  <form [formGroup]="todoGroup" (ngSubmit)="addToDo()">
+  <form [formGroup]="todoGroup">
     <table>
       <tbody formArrayName="todoArrays">
         <div *ngFor="let todo of todoArray.controls" [formGroup]="todo">
@@ -104,8 +104,8 @@
           <tr>
             <td></td>
             <td style="padding-left: 20px">
-              <button type="submit" [disabled]="!todoGroup.valid">Save</button>
-              <button *ngIf="todo.get('editing').value" (click)="cancelEdit">Cancel</button>
+              <button type="submit" [disabled]="!todoGroup.valid" (click)="addToDo()">Save</button>
+              <button *ngIf="todo.get('editing').value" (click)="cancelEdit()">Cancel</button>
             </td>
           </tr>
         </div>

@@ -80,7 +80,7 @@ export class TodoCreateComponent {
 
   //not working
   cancelEdit(){
-    this.selectedTask.editing = false;
+    this.selectedTask.editing = false; // send back to app
     this.todoArray.removeAt(0);
     this.addToDoRow();
   }

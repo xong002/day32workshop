@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 
 @Component({
@@ -60,9 +60,12 @@ export class AppComponent {
     console.log(this.taskList)
   }
 
+  @Output() selectedEditTask : EventEmitter<any> = new EventEmitter();
+
   editTask(event: string) {
     this.selectedTask = this.taskList.find(t => t.description === event);
-    this.selectedTask.editing = true;
+    this.selectedEditTask.emit(this.selectedTask);
+    // this.selectedTask.editing = true;
     console.log(this.selectedTask);
   }
 
