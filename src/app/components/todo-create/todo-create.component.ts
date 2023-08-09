@@ -76,6 +76,9 @@ export class TodoCreateComponent {
     let arrayControl = this.todoGroup.get('todoArrays') as FormArray;
     this.addToDoOutput.emit(arrayControl);
     console.log(arrayControl.at(0).value)
+    
+    this.todoArray.removeAt(0);
+    this.addToDoRow();
   }
 
   @Output() cancelEditTask: EventEmitter<any> = new EventEmitter();

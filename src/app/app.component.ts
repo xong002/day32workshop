@@ -43,10 +43,16 @@ export class AppComponent {
   }
 
   addToDoList(event: FormArray) {
-    let task = event.at(0).value; //check if task description exists in taskList array
-    console.log(task);
+    let task = event.at(0).value; 
+    let taskIndex = this.taskList.findIndex(t => t.description === task.description);
+    console.log(taskIndex)
+
+    if(taskIndex == -1){
     this.taskList.push(task)
-    console.log(this.taskList)
+    } else if(taskIndex >= 0) {
+      console.log(">-1")
+      this.taskList[taskIndex] = task
+    }
   }
 
   markCompleted(event: string) {
@@ -63,7 +69,6 @@ export class AppComponent {
   editTask(event: string) {
     this.selectedTask = this.taskList.find(t => t.description === event);
     this.selectedTask.editing = true;
-    console.log(this.selectedTask);
   }
 
   cancelEditTask(event: any){
