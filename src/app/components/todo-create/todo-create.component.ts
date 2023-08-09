@@ -33,10 +33,10 @@ export class TodoCreateComponent {
     this.addToDoRow();
   }
 
-  ngOnChanges(){
+  ngOnChanges() {
     if (this.selectedTask == null) {
       console.log("null");
-    } else if(this.selectedTask.editing){
+    } else if (this.selectedTask.editing) {
       this.todoArray.removeAt(0);
       this.addEditToDoRow();
     }
@@ -49,7 +49,7 @@ export class TodoCreateComponent {
         updateOn: 'change'
       }),
       priority: new FormControl<string>(this.priorityLevel, [Validators.required]),
-      due: new FormControl<string>(new Date().toJSON().slice(0,10), [Validators.required, dateValidator]),
+      due: new FormControl<string>(new Date().toJSON().slice(0, 10), [Validators.required, dateValidator]),
       completed: new FormControl<boolean>(false),
       editing: new FormControl<boolean>(false)
     })
@@ -78,9 +78,12 @@ export class TodoCreateComponent {
     console.log(arrayControl.at(0).value)
   }
 
-  //not working
-  cancelEdit(){
-    this.selectedTask.editing = false; // send back to app
+  @Output() cancelEditTask: EventEmitter<any> = new EventEmitter();
+
+  cancelEdit() {
+    this.selectedTask.editing = false;
+    this.cancelEditTask.emit(this.selectedTask);
+
     this.todoArray.removeAt(0);
     this.addToDoRow();
   }

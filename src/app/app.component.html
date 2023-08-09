@@ -1,4 +1,5 @@
-<app-todo-create [selectedTask]="selectedTask" (addToDoOutput)="addToDoList($event)"></app-todo-create>
+<app-todo-create [selectedTask]="selectedTask" (addToDoOutput)="addToDoList($event)"
+(cancelEditTask)="cancelEditTask($event)"></app-todo-create>
 <br /><br />
 <div class="container border border-dark table-responsive">
   <h1>Task List</h1>

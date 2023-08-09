@@ -60,13 +60,16 @@ export class AppComponent {
     console.log(this.taskList)
   }
 
-  @Output() selectedEditTask : EventEmitter<any> = new EventEmitter();
-
   editTask(event: string) {
     this.selectedTask = this.taskList.find(t => t.description === event);
-    this.selectedEditTask.emit(this.selectedTask);
-    // this.selectedTask.editing = true;
+    this.selectedTask.editing = true;
     console.log(this.selectedTask);
+  }
+
+  cancelEditTask(event: any){
+    let taskIndex = this.taskList.findIndex(t => t.description === event.description);
+    this.taskList[taskIndex].completed = false;
+    this.selectedTask = null;
   }
 
 }
