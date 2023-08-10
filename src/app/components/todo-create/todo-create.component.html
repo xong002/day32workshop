@@ -90,22 +90,30 @@
                 Please select due date (mandatory).
               </div>
               <div
-                *ngIf="
-                  todo.get('due').hasError('pastDate')
-                "
+                *ngIf="todo.get('due').hasError('pastDate')"
                 style="width: auto; color: red"
               >
                 Date is in the past.
               </div>
             </td>
           </tr>
-          <tr><input type="hidden" formControlName="completed">
-            <input type="hidden" formControlName="editing"></tr>
+          <tr>
+            <input type="hidden" formControlName="completed" />
+            <input type="hidden" formControlName="editing" />
+          </tr>
           <tr>
             <td></td>
             <td style="padding-left: 20px">
-              <button type="submit" [disabled]="!todoGroup.valid" (click)="addToDo()">Save</button>
-              <button *ngIf="todo.get('editing').value" (click)="cancelEdit()">Cancel</button>
+              <button
+                type="submit"
+                [disabled]="!todoGroup.valid"
+                (click)="addToDo()"
+              >
+                Save
+              </button>
+              <button *ngIf="todo.get('editing').value" (click)="cancelEdit()">
+                Cancel
+              </button>
             </td>
           </tr>
         </div>
@@ -113,3 +121,85 @@
     </table>
   </form>
 </div>
+
+<div>
+  <form [formGroup]="todoGroup">
+    <div formArrayName="todoArrays">
+      <div *ngFor="let todo of todoArray.controls" [formGroup]="todo">
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <input matInput value="description" formControlName="description" />
+          <mat-hint>Please enter a description.</mat-hint>
+        </mat-form-field>
+        <br /><br />
+        &nbsp;&nbsp;Priority: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <mat-radio-group formControlName="priority">
+          <mat-radio-button value="High" labelPosition="before"
+            >High</mat-radio-button
+          >
+          <mat-radio-button value="Medium" labelPosition="before"
+            >Medium</mat-radio-button
+          >
+          <mat-radio-button value="Low" labelPosition="before"
+            >Low</mat-radio-button
+          >
+        </mat-radio-group>
+        <br /><br />
+        <mat-form-field>
+          <mat-label>Due date:</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="due" />
+          <mat-hint>Please enter a due date (DD/MM/YYYY).</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <input type="hidden" formControlName="completed" />
+        <input type="hidden" formControlName="editing" />
+        <br /><br /><br />
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="!todoGroup.valid"
+          (click)="addToDo()"
+        >
+          Save
+        </button>
+        <button
+          mat-raised-button
+          color="warn"
+          *ngIf="todo.get('editing').value"
+          (click)="cancelEdit()"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- <br /><br /><br /><br /><br /><br /><br /><br />
+<form>
+  <mat-form-field>
+    <mat-label>Message</mat-label>
+    <input
+      matInput
+      #message
+      maxlength="256"
+      placeholder="Ex. I need help with..."
+    />
+    <mat-hint align="start"
+      ><strong>Don't disclose personal info</strong>
+    </mat-hint>
+    <mat-hint align="end">{{ message.value.length }} / 256</mat-hint>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Choose a date</mat-label>
+    <input matInput [matDatepicker]="picker" />
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</form> -->
